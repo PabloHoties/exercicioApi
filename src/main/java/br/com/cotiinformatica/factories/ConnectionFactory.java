@@ -10,7 +10,7 @@ public class ConnectionFactory {
 	private static String user = "postgres";
 	private static String pass = "coti";
 
-	public Connection getConnection() throws Exception {
+	public static Connection getConnection() throws Exception {
 		Class.forName(driver);
 		return DriverManager.getConnection(url, user, pass);
 	}
