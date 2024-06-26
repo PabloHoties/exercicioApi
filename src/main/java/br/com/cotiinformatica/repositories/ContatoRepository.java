@@ -6,9 +6,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import br.com.cotiinformatica.entities.Contato;
 import br.com.cotiinformatica.factories.ConnectionFactory;
 
+@Repository
 public class ContatoRepository {
 
 	public void insert(Contato contato) throws Exception {
