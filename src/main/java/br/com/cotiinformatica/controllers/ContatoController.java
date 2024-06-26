@@ -1,5 +1,7 @@
 package br.com.cotiinformatica.controllers;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,23 +16,17 @@ import br.com.cotiinformatica.repositories.ContatoRepository;
 @RequestMapping("/api/contatos")
 public class ContatoController {
 
-	@PostMapping("criar")
+	@Autowired
+	ModelMapper modelMapper;
+	
+	@Autowired
+	ContatoRepository contatoRepository;
+	
+	@PostMapping
 	public ContatoResponseDto post(@RequestBody ContatoRequestDto dto) throws Exception {
 
-		Contato contato = new Contato();
-		contato.setNome(dto.getNome());
-		contato.setEmail(dto.getEmail());
-		contato.setTelefone(dto.getTelefone());
-
-		ContatoRepository contatoRepository = new ContatoRepository();
+		Contato contato = modelMapper.map(dto, Contato.class);
 		contatoRepository.insert(contato);
-
-		ContatoResponseDto response = new ContatoResponseDto();
-		response.setId(contato.getIdContato());
-		response.setNome(contato.getNome());
-		response.setEmail(contato.getEmail());
-		response.setTelefone(contato.getTelefone());
-
-		return response;
+		return modelMapper.map(contato, ContatoResponseDto.class);
 	}
 }
